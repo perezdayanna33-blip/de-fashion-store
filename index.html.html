@@ -1,0 +1,540 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lato:wght@300;400;700&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Lato',sans-serif;background:#fff8fb;}
+.page{display:none}.page.active{display:block}
+nav{background:white;border-bottom:2px solid #fce4ec;padding:0 20px;position:sticky;top:0;z-index:50}
+.nav-in{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:62px}
+.logo-c{width:36px;height:36px;border-radius:50%;background:#e91e63;display:flex;align-items:center;justify-content:center;color:white;font-family:'Playfair Display',serif;font-weight:700;font-size:15px}
+.nb{background:none;border:none;font-family:'Lato',sans-serif;font-size:12px;font-weight:700;color:#c2185b;cursor:pointer;padding:7px 11px;border-radius:8px;text-transform:uppercase;letter-spacing:.5px;transition:background .15s}
+.nb:hover,.nb.on{background:#fce4ec}
+.cbtn{background:#e91e63;border:none;border-radius:50%;width:38px;height:38px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;position:relative}
+.cbadge{position:absolute;top:-4px;right:-4px;background:#880e4f;color:white;border-radius:50%;width:17px;height:17px;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;display:none}
+.bp{background:#e91e63;color:white;border:none;padding:11px 22px;border-radius:50px;font-family:'Lato',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:opacity .2s}
+.bp:hover{opacity:.88}
+.bo{background:transparent;color:#e91e63;border:2px solid #e91e63;padding:9px 20px;border-radius:50px;font-family:'Lato',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s}
+.bo:hover{background:#e91e63;color:white}
+.tag{display:inline-block;background:#fce4ec;color:#880e4f;border-radius:50px;padding:4px 13px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase}
+.card{background:white;border-radius:18px;border:1.5px solid #fce4ec;overflow:hidden;transition:transform .25s,box-shadow .25s}
+.card:hover{transform:translateY(-5px);box-shadow:0 14px 28px rgba(233,30,99,.13)}
+.cimg{height:220px;overflow:hidden;cursor:pointer;position:relative}
+.cimg img{width:100%;height:100%;object-fit:cover;transition:transform .3s}
+.cimg:hover img{transform:scale(1.04)}
+.cbody{padding:15px}
+.price{font-family:'Playfair Display',serif;font-size:19px;font-weight:700;color:#e91e63}
+.sbtn{background:white;border:1.5px solid #f48fb1;color:#c2185b;border-radius:7px;padding:4px 10px;font-size:11px;cursor:pointer;transition:all .15s}
+.sbtn:hover,.sbtn.on{background:#e91e63;border-color:#e91e63;color:white}
+.cpill{background:white;border:1.5px solid #f8bbd0;color:#880e4f;padding:6px 16px;border-radius:50px;font-family:'Lato',sans-serif;font-size:12px;font-weight:700;cursor:pointer;transition:all .2s;white-space:nowrap}
+.cpill:hover,.cpill.on{background:#e91e63;border-color:#e91e63;color:white}
+.sec{max-width:1100px;margin:0 auto;padding:44px 20px}
+.sh{text-align:center;margin-bottom:36px}
+.g4{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:20px}
+.cc{background:#fce4ec;border-radius:18px;padding:24px 12px;text-align:center;cursor:pointer;border:1.5px solid #f8bbd0;transition:transform .2s}
+.cc:hover{transform:translateY(-3px)}
+.overlay{position:fixed;inset:0;background:rgba(136,14,79,.18);z-index:100;display:none}
+.drawer{position:fixed;right:0;top:0;bottom:0;width:340px;background:white;z-index:101;overflow-y:auto;box-shadow:-6px 0 28px rgba(233,30,99,.13);display:none;transform:translateX(100%);transition:transform .3s}
+.drawer.open{display:block;transform:translateX(0)}
+.dh{padding:18px;border-bottom:1.5px solid #fce4ec;display:flex;justify-content:space-between;align-items:center}
+.ci{display:flex;gap:10px;margin-bottom:14px;padding:12px;background:#fff0f6;border-radius:12px}
+.ci-img{width:52px;height:52px;border-radius:9px;overflow:hidden;flex-shrink:0}
+.ci-img img{width:100%;height:100%;object-fit:cover}
+.qb{background:#e91e63;color:white;border:none;border-radius:50%;width:20px;height:20px;cursor:pointer;font-weight:700;font-size:12px;display:flex;align-items:center;justify-content:center;line-height:1}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#880e4f;color:white;padding:11px 22px;border-radius:50px;font-family:'Lato',sans-serif;font-size:13px;font-weight:700;z-index:200;white-space:nowrap;display:none}
+.pv{max-width:860px;margin:0 auto;padding:36px 20px}
+.pvg{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+.pvi{border-radius:24px;overflow:hidden;height:440px}
+.pvi img{width:100%;height:100%;object-fit:cover}
+.fi{width:100%;padding:12px 16px;border-radius:12px;border:2px solid #f8bbd0;outline:none;font-family:'Lato',sans-serif;font-size:14px;color:#880e4f;background:#fff8fb;margin-bottom:18px}
+textarea.fi{resize:vertical;min-height:90px}
+.agrid{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:center;margin-bottom:44px}
+.aimg{background:#fce4ec;border-radius:24px;height:260px;display:flex;align-items:center;justify-content:center;font-size:80px}
+.vg{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.vc{background:white;border-radius:18px;padding:24px 16px;border:1.5px solid #fce4ec;text-align:center}
+.ir{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:24px;padding-top:20px;border-top:1.5px dashed #f8bbd0}
+.hero-img-wrap{background:#fce4ec;border-radius:32px;height:360px;overflow:hidden;position:relative}
+.hero-img-wrap img{width:100%;height:100%;object-fit:cover}
+</style>
+
+<nav>
+  <div class="nav-in">
+    <div style="display:flex;align-items:center;gap:9px">
+      <div class="logo-c" id="secret-logo" ondblclick="openAdminPanel()" style="user-select:none">D</div>
+      <div>
+        <div style="font-family:'Playfair Display',serif;font-size:19px;font-weight:700;color:#880e4f;letter-spacing:2px">D&E</div>
+        <div style="font-family:'Lato',sans-serif;font-size:8px;color:#f48fb1;letter-spacing:3px;text-transform:uppercase;margin-top:-2px">Fashion Store</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:3px">
+      <button class="nb on" id="nb-home" onclick="go('home')">Inicio</button>
+      <button class="nb" id="nb-catalog" onclick="go('catalog')">Catálogo</button>
+      <button class="nb" id="nb-about" onclick="go('about')">Nosotras</button>
+      <button class="nb" id="nb-contact" onclick="go('contact')">Contacto</button>
+    </div>
+    <button class="cbtn" onclick="toggleCart()">🛍<span class="cbadge" id="cbadge">0</span></button>
+  </div>
+</nav>
+
+<!-- HOME -->
+<div id="page-home" class="page active">
+  <div style="max-width:1100px;margin:0 auto;padding:56px 20px 44px;display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:center">
+    <div>
+      <div style="font-family:'Lato',sans-serif;font-size:10px;letter-spacing:4px;color:#f48fb1;text-transform:uppercase;margin-bottom:12px">Nueva Colección 2026</div>
+      <h1 style="font-family:'Playfair Display',serif;font-size:clamp(34px,4vw,56px);font-weight:700;color:#880e4f;line-height:1.1;margin-bottom:20px">Viste lo que<br><em style="color:#e91e63">sientes</em></h1>
+      <p style="font-family:'Lato',sans-serif;font-size:15px;color:#c2185b;line-height:1.8;margin-bottom:28px">Descubre moda femenina diseñada para que te sientas única, elegante y poderosa cada día.</p>
+      <div style="display:flex;gap:14px;flex-wrap:wrap">
+        <button class="bp" onclick="go('catalog')">Ver Colección</button>
+        <button class="bo" onclick="go('about')">Nuestra Historia</button>
+      </div>
+      <div style="display:flex;gap:28px;margin-top:36px">
+        <div><div style="font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:#e91e63">18+</div><div style="font-family:'Lato',sans-serif;font-size:10px;color:#f48fb1;letter-spacing:1px">Productos</div></div>
+        <div><div style="font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:#e91e63">2K+</div><div style="font-family:'Lato',sans-serif;font-size:10px;color:#f48fb1;letter-spacing:1px">Clientas felices</div></div>
+        <div><div style="font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:#e91e63">100%</div><div style="font-family:'Lato',sans-serif;font-size:10px;color:#f48fb1;letter-spacing:1px">Calidad</div></div>
+      </div>
+    </div>
+    <div class="hero-img-wrap">
+      <img src="/mnt/user-data/uploads/1779223668106_image.png" alt="D&E Fashion">
+      <div style="position:absolute;top:18px;right:18px;background:white;border-radius:14px;padding:9px 16px;font-family:'Playfair Display',serif;font-size:12px;color:#e91e63;font-weight:600">✨ Nueva llegada</div>
+      <div style="position:absolute;bottom:18px;left:18px;background:#e91e63;border-radius:14px;padding:9px 16px;font-family:'Lato',sans-serif;font-size:11px;color:white;font-weight:700">🚚 Envío GRATIS</div>
+    </div>
+  </div>
+
+  <div style="background:white;padding:44px 20px">
+    <div style="max-width:1100px;margin:0 auto">
+      <div class="sh"><span class="tag">Explora</span><h2 style="font-family:'Playfair Display',serif;font-size:28px;color:#880e4f;margin-top:10px">Nuestras Categorías</h2></div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:14px">
+        <div class="cc" onclick="filterAndGo('Tops')"><div style="font-size:30px;margin-bottom:8px">👚</div><div style="font-family:'Playfair Display',serif;font-size:13px;font-weight:600;color:#880e4f">Tops</div></div>
+        <div class="cc" onclick="filterAndGo('Pantalones')"><div style="font-size:30px;margin-bottom:8px">👖</div><div style="font-family:'Playfair Display',serif;font-size:13px;font-weight:600;color:#880e4f">Pantalones</div></div>
+        <div class="cc" onclick="filterAndGo('Vestidos')"><div style="font-size:30px;margin-bottom:8px">👗</div><div style="font-family:'Playfair Display',serif;font-size:13px;font-weight:600;color:#880e4f">Vestidos</div></div>
+        <div class="cc" onclick="filterAndGo('Faldas')"><div style="font-size:30px;margin-bottom:8px">🌸</div><div style="font-family:'Playfair Display',serif;font-size:13px;font-weight:600;color:#880e4f">Faldas</div></div>
+        <div class="cc" onclick="filterAndGo('Sets')"><div style="font-size:30px;margin-bottom:8px">✨</div><div style="font-family:'Playfair Display',serif;font-size:13px;font-weight:600;color:#880e4f">Sets</div></div>
+        <div class="cc" onclick="filterAndGo('Outerwear')"><div style="font-size:30px;margin-bottom:8px">🧥</div><div style="font-family:'Playfair Display',serif;font-size:13px;font-weight:600;color:#880e4f">Outerwear</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sh"><span class="tag">Lo más nuevo</span><h2 style="font-family:'Playfair Display',serif;font-size:28px;color:#880e4f;margin-top:10px">Favoritas de la semana</h2></div>
+    <div class="g4" id="featured-grid"></div>
+    <div style="text-align:center;margin-top:32px"><button class="bp" onclick="go('catalog')">Ver todos los productos</button></div>
+  </div>
+
+  <div style="background:#880e4f;border-radius:24px;padding:44px 36px;margin:0 20px 48px;max-width:1100px;margin-left:auto;margin-right:auto;display:grid;grid-template-columns:1fr auto;gap:28px;align-items:center">
+    <div>
+      <h2 style="font-family:'Playfair Display',serif;font-size:28px;color:white;margin-bottom:8px">Envío gratis en tu primera compra 🎉</h2>
+      <p style="font-family:'Lato',sans-serif;color:rgba(255,255,255,.82);font-size:14px;line-height:1.7">Regístrate hoy y obtén envío gratuito en tu primer pedido.</p>
+    </div>
+    <button class="bp" style="background:white;color:#e91e63;white-space:nowrap" onclick="go('catalog')">¡Comprar ahora!</button>
+  </div>
+</div>
+
+<!-- CATALOG -->
+<div id="page-catalog" class="page">
+  <div class="sec">
+    <div class="sh"><span class="tag">Catálogo</span><h1 style="font-family:'Playfair Display',serif;font-size:34px;color:#880e4f;margin-top:10px">Toda la Colección</h1><p style="font-family:'Lato',sans-serif;color:#f48fb1;margin-top:6px">Encuentra tu look perfecto</p></div>
+    <div style="display:flex;gap:10px;margin-bottom:28px;flex-wrap:wrap;align-items:center">
+      <div style="flex:1;min-width:200px;position:relative">
+        <span style="position:absolute;left:14px;top:50%;transform:translateY(-50%);color:#f48fb1;font-size:15px">🔍</span>
+        <input id="search-input" type="text" placeholder="Buscar productos..." style="width:100%;padding:11px 14px 11px 36px;border-radius:50px;border:2px solid #f8bbd0;outline:none;font-family:'Lato',sans-serif;font-size:13px;color:#880e4f" oninput="renderCatalog()">
+      </div>
+      <div style="display:flex;gap:7px;flex-wrap:wrap" id="cat-pills"></div>
+    </div>
+    <div class="g4" id="catalog-grid"></div>
+  </div>
+</div>
+
+<!-- PRODUCT DETAIL -->
+<div id="page-product" class="page">
+  <div class="pv">
+    <button onclick="go('catalog')" style="background:none;border:none;color:#c2185b;font-family:'Lato',sans-serif;font-size:13px;cursor:pointer;margin-bottom:24px;font-weight:700">← Volver al catálogo</button>
+    <div class="pvg">
+      <div class="pvi"><img id="pv-img" src="" alt="producto"></div>
+      <div>
+        <span class="tag" id="pv-cat"></span>
+        <h1 style="font-family:'Playfair Display',serif;font-size:26px;color:#880e4f;margin:12px 0 8px;font-weight:700" id="pv-name"></h1>
+        <div style="font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:#e91e63;margin-bottom:16px" id="pv-price"></div>
+        <p style="font-family:'Lato',sans-serif;font-size:14px;color:#c2185b;line-height:1.8;margin-bottom:20px" id="pv-desc"></p>
+        <div style="margin-bottom:16px">
+          <div style="font-family:'Lato',sans-serif;font-size:10px;color:#f48fb1;letter-spacing:1px;text-transform:uppercase;font-weight:700;margin-bottom:8px">Colores disponibles</div>
+          <div id="pv-colors" style="display:flex;gap:7px;flex-wrap:wrap"></div>
+        </div>
+        <div style="margin-bottom:22px">
+          <div style="font-family:'Lato',sans-serif;font-size:10px;color:#f48fb1;letter-spacing:1px;text-transform:uppercase;font-weight:700;margin-bottom:8px">Selecciona tu talla</div>
+          <div id="pv-sizes" style="display:flex;gap:8px;flex-wrap:wrap"></div>
+        </div>
+        <button class="bp" id="pv-add" style="width:100%;padding:14px;font-size:15px" onclick="addFromProduct()">Selecciona una talla</button>
+        <div style="margin-top:18px;display:flex;gap:14px;flex-wrap:wrap">
+          <span style="font-family:'Lato',sans-serif;font-size:11px;color:#f48fb1">🚚 Envío gratis</span>
+          <span style="font-family:'Lato',sans-serif;font-size:11px;color:#f48fb1">↩️ Devoluciones 30 días</span>
+          <span style="font-family:'Lato',sans-serif;font-size:11px;color:#f48fb1">✅ Garantía de calidad</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<div id="page-about" class="page">
+  <div class="sec">
+    <div class="sh"><span class="tag">Nuestra historia</span><h1 style="font-family:'Playfair Display',serif;font-size:36px;color:#880e4f;margin-top:12px">Sobre D&E</h1><p style="font-family:'Lato',sans-serif;color:#f48fb1;font-size:15px;margin-top:8px">Moda con alma, elegancia con propósito</p></div>
+    <div class="agrid">
+      <div class="aimg">🌷</div>
+      <div>
+        <h2 style="font-family:'Playfair Display',serif;font-size:22px;color:#880e4f;margin-bottom:14px">Nacimos para inspirarte</h2>
+        <p style="font-family:'Lato',sans-serif;color:#c2185b;line-height:1.9;font-size:14px">D&E nació con la visión de crear una tienda donde cada mujer encuentre prendas que la hagan sentir segura, bella y auténtica. Creemos que la moda es una forma de expresión personal, y cada pieza de nuestra colección está pensada con amor y dedicación.</p>
+        <div style="margin-top:18px;padding:14px 18px;background:#fff0f6;border-radius:12px;border-left:4px solid #e91e63">
+          <p style="font-family:'Playfair Display',serif;font-size:14px;color:#880e4f;font-style:italic">"La elegancia no es sinónimo de ostentación. Es una cuestión de equilibrio."</p>
+        </div>
+      </div>
+    </div>
+    <div class="vg">
+      <div class="vc"><div style="font-size:38px;margin-bottom:10px">🌸</div><h3 style="font-family:'Playfair Display',serif;font-size:17px;color:#880e4f;margin-bottom:8px">Calidad</h3><p style="font-family:'Lato',sans-serif;font-size:13px;color:#c2185b;line-height:1.7">Cada prenda pasa por rigurosos controles antes de llegar a ti.</p></div>
+      <div class="vc"><div style="font-size:38px;margin-bottom:10px">💕</div><h3 style="font-family:'Playfair Display',serif;font-size:17px;color:#880e4f;margin-bottom:8px">Estilo</h3><p style="font-family:'Lato',sans-serif;font-size:13px;color:#c2185b;line-height:1.7">Tendencias actuales para la mujer moderna y segura de sí misma.</p></div>
+      <div class="vc"><div style="font-size:38px;margin-bottom:10px">✨</div><h3 style="font-family:'Playfair Display',serif;font-size:17px;color:#880e4f;margin-bottom:8px">Confianza</h3><p style="font-family:'Lato',sans-serif;font-size:13px;color:#c2185b;line-height:1.7">Más de 2,000 clientas satisfechas respaldan nuestros diseños.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div id="page-contact" class="page">
+  <div class="sec">
+    <div class="sh"><span class="tag">Escríbenos</span><h1 style="font-family:'Playfair Display',serif;font-size:34px;color:#880e4f;margin-top:10px">Contacto</h1><p style="font-family:'Lato',sans-serif;color:#f48fb1;margin-top:6px">Estamos aquí para ayudarte</p></div>
+    <div style="background:white;border-radius:24px;padding:36px;border:1.5px solid #fce4ec;max-width:600px;margin:0 auto">
+      <div id="contact-form">
+        <label style="display:block;font-family:'Lato',sans-serif;font-size:10px;color:#f48fb1;letter-spacing:1px;text-transform:uppercase;font-weight:700;margin-bottom:6px">🌸 Nombre completo</label>
+        <input id="c-name" class="fi" type="text" placeholder="Tu nombre">
+        <label style="display:block;font-family:'Lato',sans-serif;font-size:10px;color:#f48fb1;letter-spacing:1px;text-transform:uppercase;font-weight:700;margin-bottom:6px">✉️ Correo electrónico</label>
+        <input id="c-email" class="fi" type="email" placeholder="tu@correo.com">
+        <label style="display:block;font-family:'Lato',sans-serif;font-size:10px;color:#f48fb1;letter-spacing:1px;text-transform:uppercase;font-weight:700;margin-bottom:6px">💬 Mensaje</label>
+        <textarea id="c-msg" class="fi" placeholder="Escribe tu mensaje..."></textarea>
+        <button class="bp" style="width:100%;padding:14px;font-size:14px" onclick="sendContact()">Enviar mensaje 💕</button>
+      </div>
+      <div id="contact-thanks" style="display:none;text-align:center;padding:36px 0">
+        <div style="font-size:56px">💌</div>
+        <h2 style="font-family:'Playfair Display',serif;color:#880e4f;margin-top:12px">¡Mensaje enviado!</h2>
+        <p style="font-family:'Lato',sans-serif;color:#f48fb1;margin-top:7px">Te respondemos a la brevedad 💕</p>
+      </div>
+      <div class="ir">
+        <div style="text-align:center"><div style="font-size:20px;margin-bottom:5px">📍</div><div style="font-family:'Lato',sans-serif;font-size:10px;color:#f48fb1;text-transform:uppercase;font-weight:700;letter-spacing:1px">Ubicación</div><div style="font-family:'Lato',sans-serif;font-size:12px;color:#880e4f;margin-top:3px">Colima, México</div></div>
+        <div style="text-align:center"><div style="font-size:20px;margin-bottom:5px">📱</div><div style="font-family:'Lato',sans-serif;font-size:10px;color:#f48fb1;text-transform:uppercase;font-weight:700;letter-spacing:1px">WhatsApp</div><div style="font-family:'Lato',sans-serif;font-size:12px;color:#880e4f;margin-top:3px">312 000 0000</div></div>
+        <div style="text-align:center"><div style="font-size:20px;margin-bottom:5px">📧</div><div style="font-family:'Lato',sans-serif;font-size:10px;color:#f48fb1;text-transform:uppercase;font-weight:700;letter-spacing:1px">Email</div><div style="font-family:'Lato',sans-serif;font-size:12px;color:#880e4f;margin-top:3px">hola@destore.mx</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer style="background:#880e4f;color:#fce4ec;padding:30px 20px;text-align:center;margin-top:28px">
+  <div style="font-family:'Playfair Display',serif;font-size:22px;font-weight:700;letter-spacing:3px;margin-bottom:5px">D&E</div>
+  <p style="font-family:'Lato',sans-serif;font-size:10px;letter-spacing:2px;opacity:.7;text-transform:uppercase">Fashion Store · Elegancia que inspira</p>
+  <div style="border-top:1px solid rgba(255,255,255,.2);margin-top:16px;padding-top:12px;font-family:'Lato',sans-serif;font-size:10px;opacity:.45">© 2026 D&E Fashion Store · Todos los derechos reservados</div>
+</footer>
+
+<!-- CART -->
+<div class="overlay" id="overlay" onclick="toggleCart()"></div>
+<div class="drawer" id="drawer">
+  <div class="dh">
+    <h2 style="font-family:'Playfair Display',serif;color:#880e4f;font-size:19px">Mi Carrito 🛍</h2>
+    <button onclick="toggleCart()" style="background:none;border:none;font-size:20px;cursor:pointer;color:#c2185b">✕</button>
+  </div>
+  <div style="padding:16px" id="cart-content"></div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const BASE='/mnt/user-data/uploads/';
+const products=[
+  {id:1,name:"Top Off-Shoulder Vino",price:349,cat:"Tops",img:BASE+"1779223668106_image.png",desc:"Top asimétrico con lazo, tela suave al tacto. Look elegante y atrevido.",sizes:["XS","S","M","L"],colors:["Vino","Negro"]},
+  {id:2,name:"Set Coord Casual Beige",price:499,cat:"Sets",img:BASE+"1779223772761_image.png",desc:"Conjunto de crop top y shorts a juego, perfecto para el día a día.",sizes:["S","M","L","XL"],colors:["Beige","Blanco"]},
+  {id:3,name:"Conjunto Blazer Blanco",price:899,cat:"Sets",img:BASE+"1779223811249_image.png",desc:"Chaleco blazer con pantalón palazzo, estilo ejecutivo y sofisticado.",sizes:["XS","S","M","L"],colors:["Blanco roto","Beige"]},
+  {id:4,name:"Jeans Cargo Wide Leg",price:649,cat:"Pantalones",img:BASE+"1779223865978_image.png",desc:"Pantalón denim cargo de corte ancho, tendencia streetwear esta temporada.",sizes:["S","M","L","XL"],colors:["Azul medio","Azul oscuro"]},
+  {id:5,name:"Pantalón Wide Leg Negro",price:549,cat:"Pantalones",img:BASE+"1779223916744_image.png",desc:"Pantalón de corte ancho color negro, elegante y versátil para cualquier ocasión.",sizes:["S","M","L","XL"],colors:["Negro"]},
+  {id:6,name:"Vestido de Gala Azul",price:1899,cat:"Vestidos",img:BASE+"1779223967143_image.png",desc:"Vestido largo strapless con pedrería y abertura lateral. Perfecto para eventos especiales.",sizes:["XS","S","M","L"],colors:["Azul cielo","Champagne"]},
+  {id:7,name:"Vestido Satinado Verde",price:1499,cat:"Vestidos",img:BASE+"1779224006639_image.png",desc:"Vestido largo strapless en satén, corte A con abertura frontal. Elegancia pura.",sizes:["XS","S","M","L","XL"],colors:["Verde oliva","Champagne","Negro"]},
+  {id:8,name:"Vestido Fiesta B&W",price:2199,cat:"Vestidos",img:BASE+"1779224042522_image.png",desc:"Vestido asimétrico negro y blanco con falda voluminosa. Impactante y único.",sizes:["XS","S","M"],colors:["Negro/Blanco"]},
+  {id:9,name:"Falda Midi Floral Rosa",price:429,cat:"Faldas",img:BASE+"1779224118296_image.png",desc:"Falda midi con estampado floral y volantes en el ruedo. Romántica y femenina.",sizes:["XS","S","M","L"],colors:["Rosa","Lila"]},
+  {id:10,name:"Falda Plisada Mini",price:329,cat:"Faldas",img:BASE+"1779224151133_image.png",desc:"Falda mini plisada estilo colegiala. Combínala con cualquier top para un look trendy.",sizes:["XS","S","M","L"],colors:["Negro","Gris","Rosa"]},
+  {id:11,name:"Abrigo Largo Acolchado",price:1299,cat:"Outerwear",img:BASE+"1779224192588_image.png",desc:"Abrigo largo con capucha acolchado, ideal para invierno. Calidez y estilo.",sizes:["S","M","L","XL"],colors:["Negro","Camel","Verde"]},
+  {id:12,name:"Jacket Suede Café",price:999,cat:"Outerwear",img:BASE+"1779224235274_image.png",desc:"Jacket corta de suede color café, look retro moderno. Perfecta sobre jeans.",sizes:["S","M","L","XL"],colors:["Café","Negro"]},
+  {id:13,name:"Set Cami Verde Militar",price:799,cat:"Sets",img:BASE+"1779224286462_image.png",desc:"Conjunto de top cami y pantalón palazzo a juego. Estilo casual chic.",sizes:["XS","S","M","L"],colors:["Verde militar","Beige","Negro"]},
+  {id:14,name:"Cardigan Tejido Vino",price:449,cat:"Tops",img:BASE+"1779224330851_image.png",desc:"Cardigan corto tejido con detalles de lazos. Suave y muy femenino.",sizes:["S","M","L"],colors:["Vino","Azul","Gris"]},
+  {id:15,name:"Tube Top Negro",price:199,cat:"Tops",img:BASE+"1779224389337_image.png",desc:"Top strapless básico en color negro. Esencial en tu guardarropa.",sizes:["XS","S","M","L"],colors:["Negro","Blanco","Rosa"]},
+  {id:16,name:"Corset Top Café",price:349,cat:"Tops",img:BASE+"1779224411176_image.png",desc:"Corset top en piel sintética café, look edgy y moderno.",sizes:["XS","S","M","L"],colors:["Café","Negro"]},
+  {id:17,name:"Pantalón Lino Palazzo",price:599,cat:"Pantalones",img:BASE+"1779224442414_image.png",desc:"Pantalón palazzo de lino beige, fluido y cómodo. Perfecto para la playa o ciudad.",sizes:["XS","S","M","L","XL"],colors:["Beige","Blanco","Arena"]},
+  {id:18,name:"Short Denim Volantes",price:399,cat:"Faldas",img:BASE+"1779224471357_image.png",desc:"Short falda de mezclilla con doble volante en capas. Tierno y fashionista.",sizes:["XS","S","M","L"],colors:["Azul medio"]}
+];
+
+const cats=['Todos',...new Set(products.map(p=>p.cat))];
+let cart=[],activeCategory='Todos',selectedProductId=null,pvSize='';
+const cardSizes={};
+
+function go(page){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+page).classList.add('active');
+  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));
+  const nb=document.getElementById('nb-'+page);
+  if(nb)nb.classList.add('on');
+  if(page==='home')renderFeatured();
+  if(page==='catalog')renderCatalog();
+  window.scrollTo(0,0);
+}
+
+function filterAndGo(cat){
+  activeCategory=cat;
+  go('catalog');
+}
+
+function renderFeatured(){
+  const g=document.getElementById('featured-grid');
+  if(g)g.innerHTML=products.slice(0,4).map(p=>cardHTML(p,'f')).join('');
+}
+
+function renderCatalog(){
+  const search=(document.getElementById('search-input')||{}).value||'';
+  const pp=document.getElementById('cat-pills');
+  if(pp)pp.innerHTML=cats.map(c=>`<button class="cpill${c===activeCategory?' on':''}" onclick="setCat('${c}')">${c}</button>`).join('');
+  const filtered=products.filter(p=>(activeCategory==='Todos'||p.cat===activeCategory)&&p.name.toLowerCase().includes(search.toLowerCase()));
+  const g=document.getElementById('catalog-grid');
+  if(g)g.innerHTML=filtered.length?filtered.map(p=>cardHTML(p,'c')).join(''):'<div style="grid-column:1/-1;text-align:center;padding:60px 0;font-family:Lato,sans-serif;color:#c2185b">No encontramos productos 🔍</div>';
+}
+
+function setCat(c){
+  activeCategory=c;
+  renderCatalog();
+}
+
+function cardHTML(p,ctx){
+  return `<div class="card">
+    <div class="cimg" onclick="openProduct(${p.id})"><img src="${p.img}" alt="${p.name}" loading="lazy"></div>
+    <div class="cbody">
+      <span class="tag" style="margin-bottom:8px;display:inline-block">${p.cat}</span>
+      <h3 onclick="openProduct(${p.id})" style="font-family:'Playfair Display',serif;font-size:14px;color:#880e4f;margin-bottom:5px;cursor:pointer;font-weight:600">${p.name}</h3>
+      <p style="font-family:'Lato',sans-serif;font-size:11px;color:#f48fb1;margin-bottom:10px;line-height:1.5">${p.desc.slice(0,60)}...</p>
+      <div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px" id="sz-${ctx}-${p.id}">
+        ${p.sizes.map(s=>`<button class="sbtn" onclick="pickSize(event,'${ctx}',${p.id},'${s}')">${s}</button>`).join('')}
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <span class="price">$${p.price.toLocaleString()}</span>
+        <button class="bp" style="padding:8px 14px;font-size:12px" onclick="addFromCard(${p.id},'${ctx}')">Añadir 🛍</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function pickSize(e,ctx,pid,s){
+  e.stopPropagation();
+  cardSizes[ctx+'-'+pid]=s;
+  document.querySelectorAll(`#sz-${ctx}-${pid} .sbtn`).forEach(b=>b.classList.toggle('on',b.textContent===s));
+}
+
+function addFromCard(pid,ctx){
+  const s=cardSizes[ctx+'-'+pid];
+  if(!s){showToast('Elige una talla primero 💕');return;}
+  addToCart(products.find(x=>x.id===pid),s);
+}
+
+function openProduct(pid){
+  const p=products.find(x=>x.id===pid);
+  selectedProductId=pid;pvSize='';
+  document.getElementById('pv-img').src=p.img;
+  document.getElementById('pv-cat').textContent=p.cat;
+  document.getElementById('pv-name').textContent=p.name;
+  document.getElementById('pv-price').textContent='$'+p.price.toLocaleString();
+  document.getElementById('pv-desc').textContent=p.desc;
+  document.getElementById('pv-colors').innerHTML=p.colors.map(c=>`<span style="background:#fce4ec;color:#880e4f;padding:4px 12px;border-radius:50px;font-family:'Lato',sans-serif;font-size:11px;font-weight:700">${c}</span>`).join('');
+  document.getElementById('pv-sizes').innerHTML=p.sizes.map(s=>`<button class="sbtn" onclick="pickPvSize('${s}')" id="pvs-${s.replace(/\//g,'-')}">${s}</button>`).join('');
+  document.getElementById('pv-add').textContent='Selecciona una talla';
+  go('product');
+}
+
+function pickPvSize(s){
+  pvSize=s;
+  document.querySelectorAll('[id^="pvs-"]').forEach(b=>b.classList.remove('on'));
+  const b=document.getElementById('pvs-'+s.replace(/\//g,'-'));
+  if(b)b.classList.add('on');
+  document.getElementById('pv-add').textContent='Añadir al carrito 🛍';
+}
+
+function addFromProduct(){
+  if(!pvSize){showToast('Elige una talla primero 💕');return;}
+  addToCart(products.find(x=>x.id===selectedProductId),pvSize);
+}
+
+function addToCart(p,size){
+  const ex=cart.find(i=>i.id===p.id&&i.size===size);
+  if(ex)ex.qty++;else cart.push({...p,size,qty:1});
+  updateBadge();renderCart();
+  showToast('✨ '+p.name+' añadido!');
+}
+
+function updateBadge(){
+  const t=cart.reduce((a,c)=>a+c.qty,0);
+  const b=document.getElementById('cbadge');
+  b.textContent=t;b.style.display=t>0?'flex':'none';
+}
+
+function renderCart(){
+  const c=document.getElementById('cart-content');
+  if(!c)return;
+  if(!cart.length){
+    c.innerHTML='<div style="text-align:center;padding:46px 0"><div style="font-size:52px">🛍️</div><p style="font-family:Lato,sans-serif;color:#c2185b;margin-top:12px;font-size:14px">Tu carrito está vacío</p><button class="bp" style="margin-top:16px" onclick="toggleCart();go(\'catalog\')">Ver Catálogo</button></div>';
+    return;
+  }
+  const total=cart.reduce((a,i)=>a+i.price*i.qty,0);
+  c.innerHTML=cart.map(i=>`
+    <div class="ci">
+      <div class="ci-img"><img src="${i.img}" alt="${i.name}"></div>
+      <div style="flex:1">
+        <div style="font-family:'Playfair Display',serif;font-weight:600;color:#880e4f;font-size:13px">${i.name}</div>
+        <div style="font-family:'Lato',sans-serif;font-size:10px;color:#f48fb1;margin-top:2px">Talla: ${i.size}</div>
+        <div style="display:flex;align-items:center;gap:6px;margin-top:6px">
+          <button class="qb" onclick="chQty(${i.id},'${i.size}',-1)">−</button>
+          <span style="font-family:'Lato',sans-serif;font-weight:700;color:#880e4f;font-size:13px">${i.qty}</span>
+          <button class="qb" onclick="chQty(${i.id},'${i.size}',1)">+</button>
+          <span style="margin-left:auto;font-family:'Lato',sans-serif;font-weight:700;color:#c2185b;font-size:13px">$${(i.price*i.qty).toLocaleString()}</span>
+        </div>
+      </div>
+      <button onclick="rmItem(${i.id},'${i.size}')" style="background:none;border:none;color:#f48fb1;cursor:pointer;font-size:15px;align-self:flex-start">✕</button>
+    </div>`).join('')+`
+    <div style="border-top:2px dashed #f8bbd0;padding-top:16px;margin-top:4px">
+      <div style="display:flex;justify-content:space-between;margin-bottom:5px"><span style="font-family:'Lato',sans-serif;color:#880e4f;font-size:13px">Envío</span><span style="font-family:'Lato',sans-serif;color:#4caf50;font-weight:700;font-size:13px">Gratis 🎉</span></div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:18px"><span style="font-family:'Playfair Display',serif;color:#880e4f;font-weight:700;font-size:15px">Total</span><span style="font-family:'Playfair Display',serif;color:#e91e63;font-weight:700;font-size:18px">$${total.toLocaleString()}</span></div>
+      <button class="bp" style="width:100%;padding:13px;font-size:14px" onclick="placeOrder()">Realizar Pedido 💕</button>
+    </div>`;
+}
+
+function chQty(id,size,d){const i=cart.find(x=>x.id===id&&x.size===size);if(i)i.qty=Math.max(1,i.qty+d);updateBadge();renderCart();}
+function rmItem(id,size){cart=cart.filter(x=>!(x.id===id&&x.size===size));updateBadge();renderCart();}
+function placeOrder(){cart=[];updateBadge();renderCart();toggleCart();showToast('✅ ¡Pedido realizado! Gracias por comprar en D&E 💕');}
+
+function toggleCart(){
+  const d=document.getElementById('drawer'),o=document.getElementById('overlay');
+  const open=d.classList.contains('open');
+  d.classList.toggle('open',!open);
+  o.style.display=open?'none':'block';
+  if(!open)renderCart();
+}
+
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.style.display='block';
+  clearTimeout(window._tt);
+  window._tt=setTimeout(()=>t.style.display='none',2700);
+}
+
+function sendContact(){
+  const n=document.getElementById('c-name').value;
+  const e=document.getElementById('c-email').value;
+  const m=document.getElementById('c-msg').value;
+  if(!n||!e||!m){showToast('Llena todos los campos 💕');return;}
+  document.getElementById('contact-form').style.display='none';
+  document.getElementById('contact-thanks').style.display='block';
+  setTimeout(()=>{
+    document.getElementById('contact-form').style.display='block';
+    document.getElementById('contact-thanks').style.display='none';
+    ['c-name','c-email','c-msg'].forEach(id=>document.getElementById(id).value='');
+  },3500);
+}
+
+renderFeatured();
+
+/* ============================================================
+   PANEL DE ADMINISTRACIÓN SECRETO — doble clic en el logo D
+   ============================================================ */
+
+const ADMIN_KEY = 'de_admin_images';
+
+// Cargar imágenes guardadas al arrancar
+function loadSavedImages() {
+  try {
+    const saved = localStorage.getItem(ADMIN_KEY);
+    if (saved) {
+      const imgs = JSON.parse(saved);
+      imgs.forEach(item => {
+        const p = products.find(x => x.id === item.id);
+        if (p && item.img) p.img = item.img;
+      });
+    }
+  } catch(e) {}
+}
+
+function saveImages() {
+  try {
+    const data = products.map(p => ({ id: p.id, img: p.img }));
+    localStorage.setItem(ADMIN_KEY, JSON.stringify(data));
+  } catch(e) {}
+}
+
+loadSavedImages();
+
+function openAdminPanel() {
+  document.getElementById('admin-overlay').style.display = 'flex';
+  renderAdminGrid();
+}
+
+function closeAdminPanel() {
+  document.getElementById('admin-overlay').style.display = 'none';
+}
+
+function renderAdminGrid() {
+  const grid = document.getElementById('admin-grid');
+  grid.innerHTML = products.map(p => `
+    <div style="background:#fff8fb;border-radius:16px;border:1.5px solid #fce4ec;overflow:hidden;position:relative">
+      <div style="height:160px;overflow:hidden;position:relative;cursor:pointer" onclick="triggerImgUpload(${p.id})" title="Haz clic para cambiar imagen">
+        <img id="admin-img-${p.id}" src="${p.img}" alt="${p.name}" style="width:100%;height:100%;object-fit:cover;transition:opacity .2s">
+        <div style="position:absolute;inset:0;background:rgba(233,30,99,0);display:flex;align-items:center;justify-content:center;transition:background .2s" class="admin-hover-overlay" onmouseover="this.style.background='rgba(233,30,99,0.55)';this.querySelector('span').style.opacity='1'" onmouseout="this.style.background='rgba(233,30,99,0)';this.querySelector('span').style.opacity='0'">
+          <span style="opacity:0;color:white;font-size:28px;transition:opacity .2s">📷</span>
+        </div>
+      </div>
+      <div style="padding:10px 12px">
+        <div style="font-family:'Playfair Display',serif;font-size:12px;color:#880e4f;font-weight:600;margin-bottom:2px">${p.name}</div>
+        <div style="font-family:'Lato',sans-serif;font-size:10px;color:#f48fb1">${p.cat}</div>
+        <button onclick="triggerImgUpload(${p.id})" style="margin-top:8px;width:100%;background:#e91e63;color:white;border:none;border-radius:8px;padding:7px;font-family:'Lato',sans-serif;font-size:11px;font-weight:700;cursor:pointer">📷 Cambiar foto</button>
+      </div>
+      <input type="file" accept="image/*" id="file-input-${p.id}" style="display:none" onchange="handleImageUpload(event,${p.id})">
+    </div>
+  `).join('');
+}
+
+function triggerImgUpload(pid) {
+  document.getElementById('file-input-' + pid).click();
+}
+
+function handleImageUpload(event, pid) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const dataUrl = e.target.result;
+    // Actualizar en el array de productos
+    const p = products.find(x => x.id === pid);
+    if (p) p.img = dataUrl;
+    // Actualizar imagen en el panel admin
+    const adminImg = document.getElementById('admin-img-' + pid);
+    if (adminImg) adminImg.src = dataUrl;
+    // Guardar en localStorage
+    saveImages();
+    // Re-renderizar catálogo/featured si están visibles
+    renderFeatured();
+    renderCatalog();
+    showToast('✅ ¡Foto actualizada! 💕');
+  };
+  reader.readAsDataURL(file);
+}
+</script>
+
+<!-- PANEL ADMIN OVERLAY -->
+<div id="admin-overlay" style="display:none;position:fixed;inset:0;background:rgba(136,14,79,0.55);z-index:999;align-items:flex-start;justify-content:center;overflow-y:auto;padding:30px 16px">
+  <div style="background:white;border-radius:28px;width:100%;max-width:900px;padding:32px;box-shadow:0 24px 60px rgba(136,14,79,0.25);position:relative">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;padding-bottom:18px;border-bottom:2px solid #fce4ec">
+      <div>
+        <div style="font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:#880e4f">Panel de fotos ✨</div>
+        <div style="font-family:'Lato',sans-serif;font-size:12px;color:#f48fb1;margin-top:3px">Haz clic en cualquier prenda para cambiar su foto</div>
+      </div>
+      <button onclick="closeAdminPanel()" style="background:#fce4ec;border:none;border-radius:50%;width:40px;height:40px;cursor:pointer;font-size:18px;color:#c2185b;display:flex;align-items:center;justify-content:center">✕</button>
+    </div>
+    <div id="admin-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px"></div>
+    <div style="margin-top:24px;padding-top:18px;border-top:1.5px dashed #f8bbd0;text-align:center">
+      <div style="font-family:'Lato',sans-serif;font-size:11px;color:#f48fb1">💡 Las fotos se guardan automáticamente en este navegador</div>
+    </div>
+  </div>
+</div>
